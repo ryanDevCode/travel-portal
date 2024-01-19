@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+
 class ExpenseTrackController extends Controller
 {
     public function getAggregatedExpenses()
@@ -116,13 +118,16 @@ class ExpenseTrackController extends Controller
             'other_expenses' => ['nullable', 'string', 'max:255'],
             'date' => ['required', 'date'],
         ]);
+        $validatedData['total'] = $validatedData['transportation'] + $validatedData['accommodation'] + $validatedData['meal'] + ($validatedData['other_expenses_amount'] ?? 0);
         $validatedData['expense_id'] = Str::random(12);
         $validatedData['user_id'] = Auth::user()->id;
+
         // dd($validatedData);
         try {
             // $report->fill($validatedData);
             // $report->save();
             $expenseTrack = ExpenseTrack::create($validatedData);
+
             // dd($expenseTrack);
             return back()->with('success', 'Expense report submitted successfully!');
         } catch (Exception $e) {
@@ -137,7 +142,8 @@ class ExpenseTrackController extends Controller
 
     }
 
-    public function getLetter($request){
+    public function getLetter($request)
+    {
         $request = TravelRequest::findOrFail($request);
 
         return view('pages.authorization_paper', ['approved' => $request]);
@@ -210,16 +216,52 @@ class ExpenseTrackController extends Controller
 
     public function ExpenseView()
     {
+        // $user = Auth::user();
+
+        // $expenses = DB::table('travel_expenses')
+        //     ->select('tr_track_no', DB::raw('SUM(transportation) as total_transportation'), DB::raw('SUM(accommodation) as total_accommodation'), DB::raw('SUM(meal) as total_meal'), DB::raw('SUM(other_expenses_amount) as total_other_expenses'))
+        //     ->where('user_id', $user->id)
+        //     ->groupBy('tr_track_no')
+        //     ->get();
+
+
+        // return view('pages.expenses', ['expenses' => $expenses]);
+
+
+        //total balance of the user
+
+
+        //remaining balance of the user
+
+
+        //return to views the table with the user_id and merge it
+
         $user = Auth::user();
+    //     $expensesTotal = DB::table('travel_requests')
+    // ->join('travel_expenses', 'travel_requests.tr_track_no', '=', 'travel_expenses.tr_track_no')
+    // ->where('travel_requests.user_id', '=', $user->id)
+    // ->selectRaw('SUM(accommodation) + SUM(meal) + SUM(transportation) + SUM(other_expenses_amount) as total')
+    // ->first()
+    // ->total;
 
-        $expenses = DB::table('travel_expenses')
-            ->select('tr_track_no', DB::raw('SUM(transportation) as total_transportation'), DB::raw('SUM(accommodation) as total_accommodation'), DB::raw('SUM(meal) as total_meal'), DB::raw('SUM(other_expenses_amount) as total_other_expenses'))
-            ->where('user_id', $user->id)
-            ->groupBy('tr_track_no')
-            ->get();
+
+    $expenses = DB::table('travel_requests')
+    ->join('travel_expenses', 'travel_requests.tr_track_no', '=', 'travel_expenses.tr_track_no')
+    ->where('travel_requests.user_id', '=', $user->id)
+    ->orderBy('travel_requests.created_at', 'desc')
+    ->paginate(10);
 
 
-        return view('pages.expenses', ['expenses' => $expenses]);
+        //     $user = Auth::user();
+        // $travelExpenses = DB::table('travel_expenses')
+        //     ->where('user_id', '=', $user->id)
+        //     ->get();
+
+
+
+
+
+        return view('pages.expenses', ['data' => $expenses]);
     }
 
 
@@ -243,10 +285,10 @@ class ExpenseTrackController extends Controller
     //     return view('pages.expenses', ['expenses' => $expenses]);
 
 
-        //get the logged in user
-        //filter the request with the user_id
-        //sum all that have the same tr_track_no
-        //then return to views
+    //get the logged in user
+    //filter the request with the user_id
+    //sum all that have the same tr_track_no
+    //then return to views
     // }
     // public function ExpenseView(){
     //     $user = Auth::user();

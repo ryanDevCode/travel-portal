@@ -33,8 +33,8 @@
                         <p>Find the features that fit your needs.
                         </p>
 
-                        <h4>Total Budget: {{ $travelRequest->estimated_amount }}</h4>
-                        <p>Remaining Bakance {{ $remainingBalance }}</p>
+                        <h4>Total Budget: {{ number_format($travelRequest->estimated_amount, 2 )}}</h4>
+                        <p>Remaining Bakance {{ number_format($remainingBalance, 2 )}}</p>
                     </div><img class="welcome-img" src="{{ asset('assets/images/dashboard/widget.svg') }}"
                         alt="search image">
                 </div>

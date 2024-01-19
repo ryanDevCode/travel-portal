@@ -47,4 +47,8 @@ class User extends Authenticatable
         return $this->hasMany(TravelRequest::class, 'user_id');
 
     }
+
+    public function expenseTracks(){
+        return $this->hasMany(ExpenseTrack::class, 'user_id');
+    }
 }

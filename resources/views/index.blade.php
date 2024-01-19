@@ -23,7 +23,8 @@
 @section('content')
     <div class="container-fluid">
         <div class="row starter-main">
-            <div class="col-sm-12 col-lg-5">
+            <h3 style="color: rgba(2,0,36,1);" class="text-center mb-3" style="color: rgba(2,0,36,1);">Travel Assistant</h3>
+            {{-- <div class="col-sm-12 col-lg-5">
                 <div class="card o-hidden welcome-card"
                     style="background: rgb(2,0,36);
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
@@ -35,13 +36,16 @@
                     </div><img class="welcome-img" src="{{ asset('assets/images/dashboard/widget.svg') }}"
                         alt="search image">
                 </div>
-            </div>
-            <div class="card col-lg-4">
+            </div> --}}
+            <h5 class="f-w-400">{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5>
+            {{-- <div class="card col-lg-6 p-2">
+<h5>{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5>
+            </div> --}}
+            <div class="card p-0">
+                <div class="card-header" style="background: rgb(2,0,36);
+                background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
+                    <h4 class="text-white">Find what you need</h4>
 
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h4>Find what you need</h4>
                 </div>
                 {{-- <form action="{{route('getWeather')}}" method="GET">
                     @csrf

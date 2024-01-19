@@ -18,6 +18,9 @@ class TravelRequest extends Model
     {
         return $this->belongsTo(User::class, 'user_id'); // Specify the foreign key
     }
-
+    public function expenseTracks()
+    {
+        return $this->hasMany(ExpenseTrack::class, 'tr_track_no'); // Adjust foreign key if needed
+    }
 
 }

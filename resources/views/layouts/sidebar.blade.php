@@ -36,7 +36,7 @@
                             href="https://pixelstrap.freshdesk.com/support/home" target="_blank">
                             <i class="icon-agenda"></i><span>Guide</span></a></li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
-                            href="https://pixelstrap.freshdesk.com/support/home" target="_blank">
+                            href="{{route('policy')}}" target="_self">
                             <i class="icon-stamp"></i><span>Policy</span></a></li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
                             href="https://pixelstrap.freshdesk.com/support/home" target="_blank">

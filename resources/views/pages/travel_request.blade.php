@@ -44,13 +44,42 @@
                 </div>
             @endif
             <div class="text-end mb-2">
-                <a href="{{ route('create-request') }}" class="button btn btn-primary ">Create new request</a>
+                <a href="{{ route('create-request') }}" class="button btn btn-primary-gradien">Create new request</a>
             </div>
             {{-- <div class="row justify-content-center"> --}}
             @foreach ($travelBudgetRequests as $request)
-                <div class="card col-lg-12 col-sm-12 m-2 ">
+                <div class="row col-lg-12 bg-white m-1 p-3 pb-4">
+                    <div class="left col mr-2">
+                            <h5 class="card-title txt-primary f-w-400 col">{{ $request->project_title }}</h5>
+
+                        <p class="f-w-400">Tracking code: {{ $request->tr_track_no }}</p>
+                        <p>Due: {{ date('F j, Y', strtotime($request->start_date)) }} - {{ date('F j, Y', strtotime($request->end_date)) }}</p>
+                        <p>Purpose: {{$request->purpose}}</p>
+                    </div>
+                    <div class="right col border border-top-0 border-end-0 border-bottom-0 ">
+                        <p>Reimbursement Amount</p>
+                        <h4 class="f-w-400">{{ number_format($request->estimated_amount, 2) }}</h4>
+                        {{-- <p class="card-text badge {{ $request->status == 'approved' ? 'badge-success' : 'badge-warning' }}">
+                        {{ $request->status }}</p> --}}
+                        <p
+                            class="card-text badge outline {{ $request->status == 'approved' ? 'badge-success' : ($request->status == 'pending' ? 'badge-warning' : '') }}">
+                            {{ $request->status == 'pending' ? 'Awaiting Approval' : $request->status }}
+                        </p>
+                        @if ($request->status == 'approved')
+                            <a href="{{ route('expense.track', ['request' => $request]) }}"
+                                class="btn btn-square btn-outline-success btn-xs mt-1">Create Expense
+                                Report</a>
+                        @endif
+                        <p>Submitted: {{ date('F j, Y', strtotime($request->created_at)) }}</p>
+                    </div>
+                    @if ($request->status == 'approved')
+                        <a href="{{ route('expense.track', ['request' => $request]) }}"
+                            class="btn btn-square btn-outline-success btn-sm">Download Authorizarion Letter</a>
+                    @endif
+                </div>
+                {{-- <div class="card col-lg-12 col-sm-12 m-2 ">
                     <div class="card-body">
-                        <p class="card-title">Title: {{ $request->project_title }}</p>
+                        <h5 class="card-title txt-primary f-w-400">{{ $request->project_title }}</h5>
                         <p><span class="text-bold">Destination: </span>{{ $request->destination }}</p>
 
                         <p>Date: {{ $request->start_date }} - {{ $request->end_date }}</p>
@@ -69,7 +98,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
             @endforeach
             {{-- </div> --}}
             <!-- Page Sidebar Ends-->
