@@ -1,0 +1,258 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ExpenseTrack;
+use Illuminate\Http\Request;
+use App\Models\TravelRequest;
+use Exception;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+class ExpenseTrackController extends Controller
+{
+    public function getAggregatedExpenses()
+    {
+        $expenses = ExpenseTrack::groupBy('tr_track_no')
+            ->selectRaw('
+            tr_track_no,
+            SUM(transportation) AS total_transportation,
+            SUM(accommodation) AS total_accommodation,
+            SUM(meal) AS total_meal,
+            SUM(other_expenses_amount) AS total_other_expenses
+        ')
+            ->get();
+
+        dd($expenses);
+        return $expenses;
+    }
+
+
+    //pass $trTrackNo in the parameter of the routes!!!!!!!
+    public function getAggregatedExpensesByTrackNo($trTrackNo)
+    {
+        $trTrackNo = 'JlCMnC6bj1xC';
+        $expenses = ExpenseTrack::where('tr_track_no', $trTrackNo)
+            ->groupBy('tr_track_no')
+            ->selectRaw('
+                tr_track_no,
+                SUM(transportation) AS total_transportation,
+                SUM(accommodation) AS total_accommodation,
+                SUM(meal) AS total_meal,
+                SUM(other_expenses_amount) AS total_other_expenses
+            ')
+            ->get();
+
+        return $expenses;
+    }
+    public function index()
+    {
+        return view('pages.expense_report');
+    }
+    //create a method that will show the authenticated users request and pass it in the views
+    public function show(Request $request)
+    {
+        $user = $request->user(); // Retrieve authenticated user from request
+        $travelBudgetRequests = $user->travelRequests()->paginate(10);
+
+        return view('pages.expense_report', ['travelBudgetRequests' => $travelBudgetRequests]); // Pass data using array syntax
+    }
+
+
+    //     public function expenseTrack($request)
+    //     {
+    // //need id ng travel request
+    // //sotre sa variable
+    // //use that varible compute for the total remaining budget
+    //         $travelRequest = TravelRequest::findOrFail($request);
+
+
+    // // $totalExpenses = TravelRequest::where('tr_track_no' ,$request)->sum('estimated_amount');
+    //         return view('pages.expense_report', ['travelRequest' => $travelRequest]);
+    //     }
+
+    public function expenseTrack($request)
+    {
+        // Get the travel request by ID
+        $travelRequest = TravelRequest::findOrFail($request);
+
+        // Get the total amount of expenses with the same ID
+        // $totalExpenses = ExpenseTrack::where('tr_track_no', $request)->sum('transportation');
+        $tr = $travelRequest->tr_track_no;
+        // dd($tr);
+        $totalexpenses = ExpenseTrack::where('tr_track_no', $tr)
+            ->groupBy('tr_track_no')
+            ->selectRaw(
+                '
+        tr_track_no,
+        SUM(transportation) AS total_transportation,
+        SUM(accommodation) AS total_accommodation,
+        SUM(meal) AS total_meal,
+        SUM(other_expenses_amount) AS total_other_expenses,
+        SUM(transportation + accommodation + meal + other_expenses_amount) AS total_expenses
+        '
+            )
+            ->first();
+        $overAllExpenses = $totalexpenses->total_expenses ?? 0;
+
+        // Calculate the remaining balance
+        $remainingBalance = $travelRequest->estimated_amount - $overAllExpenses;
+        // dd($remainingBalance);
+        return view('pages.expense_report', [
+            'travelRequest' => $travelRequest,
+            'remainingBalance' => $remainingBalance
+        ]);
+    }
+
+    public function store(Request $request, ExpenseTrack $report)
+    {
+        $validatedData = $request->validate([
+            'tr_track_no' => ['required'],
+            'transportation' => ['required', 'numeric'],
+            'accommodation' => ['required', 'numeric'],
+            'meal' => ['required', 'numeric'],
+            'other_expenses_amount' => ['nullable', 'numeric'],
+            'other_expenses' => ['nullable', 'string', 'max:255'],
+            'date' => ['required', 'date'],
+        ]);
+        $validatedData['expense_id'] = Str::random(12);
+        $validatedData['user_id'] = Auth::user()->id;
+        // dd($validatedData);
+        try {
+            // $report->fill($validatedData);
+            // $report->save();
+            $expenseTrack = ExpenseTrack::create($validatedData);
+            // dd($expenseTrack);
+            return back()->with('success', 'Expense report submitted successfully!');
+        } catch (Exception $e) {
+            dd($e);
+            Log::error('An error occurred: ' . $e->getMessage());
+            Log::error($request->all());
+            return back()->withErrors(['error' => 'Something went wrong.']);
+        }
+
+
+        // Redirect or perform other actions as needed
+
+    }
+
+    public function getLetter($request){
+        $request = TravelRequest::findOrFail($request);
+
+        return view('pages.authorization_paper', ['approved' => $request]);
+    }
+
+
+    //remaining Balance  method
+    //compute the total amount of all the expenses with the same id
+    //minus it in the amount from the travelRequest model
+    //ilagay to don sa controller bago sa expenses
+
+
+
+    // public function expenseTrack($request)
+    // {
+
+    //     $travelRequest = TravelRequest::findOrFail($request);
+
+    //     return view('pages.expense_report', ['travelRequest' => $travelRequest]);
+    // }
+
+
+
+
+
+    // public function create(Request $request, $travelBudgetRequestID)
+    // {
+    //     dd($travelBudgetRequestID);
+    //     //pede den yung id ng mismong request hindi yung tr_track_no;
+    //     $validatedData = $request->validate([
+    //         // Validation rules for expense report fields
+    //     ]);
+
+    //     ExpenseTrack::create([
+    //         'travel_budget_request_id' => $travelBudgetRequestID,
+    //         'user_id' => auth()->id(),
+    //         // Other expense report data
+    //     ]);
+
+    //     // Redirect to success page or expense report view
+    //     return view('pages.expense_repoort', ['travelBudgetRequestsID' => $travelBudgetRequestID]);
+    // }
+
+
+
+
+
+
+
+
+
+
+
+    //pass the $travelBudgetRequestId via the parameter
+    public function saveTest(Request $request, $travelBudgetRequestId)
+    {
+
+        $validatedData = $request->validate([
+            // Validation rules for expense report fields
+        ]);
+
+        ExpenseTrack::create([
+            'travel_budget_request_id' => $travelBudgetRequestId,
+            'user_id' => auth()->id(),
+            // Other expense report data
+        ]);
+
+        // Redirect to success page or expense report view
+    }
+
+    public function ExpenseView()
+    {
+        $user = Auth::user();
+
+        $expenses = DB::table('travel_expenses')
+            ->select('tr_track_no', DB::raw('SUM(transportation) as total_transportation'), DB::raw('SUM(accommodation) as total_accommodation'), DB::raw('SUM(meal) as total_meal'), DB::raw('SUM(other_expenses_amount) as total_other_expenses'))
+            ->where('user_id', $user->id)
+            ->groupBy('tr_track_no')
+            ->get();
+
+
+        return view('pages.expenses', ['expenses' => $expenses]);
+    }
+
+
+    // public function ExpenseView()
+    // {
+
+    //     $user = Auth::user();
+
+
+    //     $expenses = ExpenseTrack::where('user_id', $user->id)->get()
+    //         ->groupBy('tr_track_no')
+    //         ->selectRaw('
+    //         tr_track_no,
+    //         SUM(transportation) AS total_transportation,
+    //         SUM(accommodation) AS total_accommodation,
+    //         SUM(meal) AS total_meal,
+    //         SUM(other_expenses_amount) AS total_other_expenses
+    //     ')
+    //         ->get();
+
+    //     return view('pages.expenses', ['expenses' => $expenses]);
+
+
+        //get the logged in user
+        //filter the request with the user_id
+        //sum all that have the same tr_track_no
+        //then return to views
+    // }
+    // public function ExpenseView(){
+    //     $user = Auth::user();
+    //     $expenses = ExpenseTrack::where('user_id', $user->id)->get();
+    //     return view('pages.expenses', ['expenses' => $expenses]);
+    // }
+
+
+}
