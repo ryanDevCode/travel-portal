@@ -66,7 +66,8 @@
                                 </div>
                             @endif
                         </div>
-                        <button type="button" class="btn btn-info terms-and-conditions-button" style="display: none;">Submit</button>
+                        <button type="button" class="btn btn-info terms-and-conditions-button"
+                            style="display: none;">Submit</button>
 
                         <form action={{ route('store') }} method="POST">
                             @csrf
@@ -137,32 +138,86 @@
                                 <label for="attachment">Attachment:</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="attachment"
-                                            name="attachment">
+                                        <input type="file" class="custom-file-input" id="attachment" name="attachment">
                                         <label class="custom-file-label" for="attachment">Choose file</label>
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-info">Submit</button>
-                                <button type="button" class="btn btn-info terms-and-conditions-button" style="display: none;">Submit</button>
+                                <button class="btn btn-info" type="button" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalLong">Submit</button>
                             </div>
-                            <div class="modal" id="terms-and-conditions-modal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Terms and Conditions</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
+
+
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Terms and Condition</h5>
+                                            <button class="btn-close" type="button" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary accept-terms-and-conditions">Accept</button>
+                                        <div class="modal-body col-12">
+                                            <h3>
+                                                Travel Budget Request Portal Policy</h3>
+                                            <h6>1. Introduction</h6>
+                                            <p>This policy outlines the guidelines and procedures for utilizing the company's travel budget request portal
+                                                for submitting and approving travel budget requests.</p>
+                                            <h6>2. Eligibility</h6>
+                                            <p>All employees employed by [Company Name] who require company-funded travel for business purposes are eligible
+                                                to submit travel budget requests through the portal.</p>
+                                            <h6>3. Travel Types Covered</h6>
+                                            <p>The portal covers travel requests for:</p>
+                                            <ul>
+                                                <li>Business trips: attending conferences, meetings, client visits, and other work-related travel.</li>
+                                                <li>Professional development: training courses, workshops, and seminars directly related to employee's job
+                                                    duties.</li>
+                                                <li>Relocations approved by the company.</li>
+                                            </ul>
+                                            <h6>4. Exclusions</h6>
+                                            <p>The following are not covered by the travel budget request portal:</p>
+                                            <ul>
+                                                <li>Personal travel.</li>
+                                                <li>Travel for family members or guests.</li>
+                                                <li>Commutes to and from the employee's regular work location.</li>
+                                                <li>Travel expenses already reimbursed through another company program.</li>
+                                            </ul>
+                                            <h6>5. Budget Limitations</h6>
+                                            <p>Travel budget requests are subject to availability and approval based on departmental budgets and overall
+                                                company financial considerations.</p>
+                                            <h6>6. Request Process</h6>
+                                            <ul>
+                                                <li>Employees must submit travel budget requests through the designated portal, providing detailed information about the trip, estimated costs, and justification for company funding.</li>
+                                                <li>Requests should be submitted at least [Number] days prior to the planned travel date to allow for proper review and approval.</li>
+                                                <li>Department managers or authorized personnel will review the submitted requests and make approval decisions based on established criteria.</li>
+                                                <li>Applicants will be notified of the approval or denial decision via email.</li>
+                                            </ul>
+                                            <h6>7. Cost Considerations</h6>
+                                            <p>Employees are expected to:</p>
+                                            <ul>
+                                                <li>Choose cost-effective travel options within reasonable limits.</li>
+                                                <li>Adhere to company guidelines for airfare, hotels, meals, and other expenses.</li>
+                                                <li>Document all travel expenditures with receipts for reimbursement.</li>
+                                            </ul>
+                                            <h6>8. Reimbursement Process</h6>
+                                            <p>Approved travel expenses will be reimbursed upon submission of valid receipts and completion of the designated company reimbursement form.</p>
+                                            <h6>9. Policy Violation</h6>
+                                            <p>Non-compliance with this policy, including misuse of the portal or violation of expense guidelines, may result in disciplinary action.</p>
+                                            <h6>10. Updates</h6>
+                                            <p>This policy is subject to revision at any time as deemed necessary by the company. All employees are responsible for staying informed about any updates to the policy.</p>
+                                            <h6>11. Contact Information</h6>
+                                            <p>For any questions or concerns regarding the travel budget request portal or this policy, please contact [Department/Person] at [Contact Information].</p>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button class="btn btn-primary" type="Submit">Agree and Submit</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
                         </form>
                         <div class="modal" id="terms-and-conditions-modal">
                             <div class="modal-dialog">
@@ -172,10 +227,12 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        </div>
+                                    </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary accept-terms-and-conditions">Accept</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button"
+                                            class="btn btn-primary accept-terms-and-conditions">Accept</button>
                                     </div>
                                 </div>
                             </div>
@@ -214,22 +271,21 @@
         zIndex: 9999 // Ensure it floats above other elements
     });
     $(document).ready(function() {
-    // Hide the original submit button
-    $('.btn-info[type="submit"]').hide();
+        // Hide the original submit button
+        $('.btn-info[type="submit"]').hide();
 
-    // Show terms and conditions modal on form submission
-    $('form').submit(function(event) {
-        event.preventDefault();
-        $('#terms-and-conditions-modal').modal('show');
+        // Show terms and conditions modal on form submission
+        $('form').submit(function(event) {
+            event.preventDefault();
+            $('#terms-and-conditions-modal').modal('show');
+        });
+
+        // Handle accept button in modal
+        $('.accept-terms-and-conditions').click(function() {
+            $('#terms-and-conditions-modal').modal('hide');
+            $('.terms-and-conditions-button').click(); // Trigger original submit button
+        });
     });
-
-    // Handle accept button in modal
-    $('.accept-terms-and-conditions').click(function() {
-        $('#terms-and-conditions-modal').modal('hide');
-        $('.terms-and-conditions-button').click(); // Trigger original submit button
-    });
-});
-
 </script>
 @section('script')
     {{-- dashboard 2 --}}

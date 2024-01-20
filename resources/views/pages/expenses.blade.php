@@ -25,11 +25,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="row starter-main">
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mb-3">
                 <div class="card col-sm-12 col-lg-5  p-3 m-2 text-white"
                     style="background-color: #4158D0;
             background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
             ">
+                    <div class="text-center">
+                        <i data-feather="shopping-bag"></i>
+                    </div>
+
                     <h5>Spent</h5>
                     <h1>10000</h1>
                 </div>
@@ -37,11 +41,60 @@
                     style="background-color: #0093E9;
 background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
 ">
+                    <div class="text-center">
+                        <i data-feather="dollar-sign"></i>
+                    </div>
+
                     <h5>Total Balance</h5>
                     <h1>123490</h1>
                 </div>
             </div>
             <div class="col-sm-12">
+                <div class="">
+                    <div class="card-header p-3">
+                        <h3 class="f-w-400">List of Requests</h3>
+                    </div>
+                    <div class="table-responsive signal-table">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Track no</th>
+                                    <th scope="col">Purpose</th>
+                                    <th scope="col">Budget</th>
+                                    <th scope="col">Actions</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+@foreach ($data as $item)
+
+
+                                <tr>
+                                    <td>{{$item->tr_track_no}}</td>
+                                    <td>{{$item->purpose}}</td>
+                                    <td>{{$item->estimated_amount}}</td>
+                                    <td><a href="{{ route('expense.track', ['request' => $item->travel_request_id]) }}" class="btn btn-outline-primary btn-square">Track Expenses</a></td>
+                                    <td>{{$item->start_date}}</td>
+                                    <td>{{$item->status}}</td>
+                                </tr>
+
+@endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            {{-- <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
                         <h3>List Expenses</h3>
@@ -77,13 +130,13 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
                                     </tr>
                                 @endforeach
 
-                                {{-- {{$data->links()}} --}}
+
                             </tbody>
                         </table>
 
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
 

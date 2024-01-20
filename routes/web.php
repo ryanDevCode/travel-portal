@@ -23,15 +23,45 @@ Route::post('register', [LoginController::class, 'register'])->name('register');
 // Protected routes (require authentication)
 Route::middleware('auth')->group(function () {
     Route::view('index', 'index')->name('index');
-    // Route::view('request', 'pages.travel_request')->name('request');
+
+    //travel Request
     Route::post('request', [TravelRequestController::class, 'store'])->name('store');
-    Route::get('request',[TravelRequestController::class, 'show'] )->name('request.show');
+    Route::get('request', [TravelRequestController::class, 'show'])->name('request.show');
     Route::get('create-request', [TravelRequestController::class, 'request'])->name('create-request');
 
+
+    //expense tracking
 
     Route::get('/expense-track/{request}', [ExpenseTrackController::class, 'expenseTrack'])->name('expense.track');
     Route::post('/expense-track', [ExpenseTrackController::class, 'store'])->name('expense.track.store');
     Route::view('/expense-track', [ExpenseTrackController::class, 'index'])->name('expense.track.view');
+
+    //expense view
+    Route::get('expenses', [ExpenseTrackController::class, 'ExpenseView'])->name('ExpenseView');
+
+    //expense report
+    Route::post('expense-report', [ExpenseTrackController::class, 'getAggregatedExpensesByTrackNo'])->name('expenseReport');
+    //api
+    Route::view('api', 'pages.test')->name('testApi');
+    Route::get('api', [HomeController::class, 'test']);
+    Route::get('api/test', [TravelRequestController::class, 'getWeather'])->name('getWeather');
+
+
+
+
+
+    //PDF GENERATOR
+    Route::view('authorization-paper', 'pages.authorization_paper');
+    Route::get('/authorization-paper/{request}', [ExpenseTrackController::class, 'getLetter'])->name('getLetter');
+    Route::get('generate-pdf/{request}', [PdfController::class, 'generatePDF'])->name(('generate-pdf'));
+    Route::view('policy', 'pages.policy')->name('policy');
+
+
+
+
+
+
+    // Route::get('create-request', [TravelRequestController::class, 'request'])->name('create-request');
 
     // Route::get('request', [TravelRequestController::class, 'show']);
     // Route::get('request', [TravelRequestController::class,'show'])->name('expense');
@@ -41,21 +71,4 @@ Route::middleware('auth')->group(function () {
 
 
     // Route::get('index', [WeatherController::class, 'getWeather'])->name('getWeather');
-    Route::view('api', 'pages.test')->name('testApi');
-
-    Route::get('api', [HomeController::class, 'test']);
-    Route::get('api/test', [TravelRequestController::class, 'getWeather'])->name('getWeather');
-    // Route::get('create-request', [TravelRequestController::class, 'request'])->name('create-request');
-
-
-    Route::get('expenses', [ExpenseTrackController::class, 'ExpenseView'])->name('ExpenseView');
-
-
-    Route::view('authorization-paper', 'pages.authorization_paper');
-    Route::get('/authorization-paper/{request}', [ExpenseTrackController::class, 'getLetter'])->name('getLetter');
-
-
-    Route::get('generate-pdf/{request}', [PdfController::class, 'generatePDF'])->name(('generate-pdf'));
-
-    Route::view('policy', 'pages.policy')->name('policy');
 });
