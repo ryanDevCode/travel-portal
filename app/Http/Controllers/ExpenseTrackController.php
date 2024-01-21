@@ -53,7 +53,6 @@ class ExpenseTrackController extends Controller
         '
             )
             ->first();
-
         $overAllExpenses = $totalexpenses->total_expenses ?? 0;
 
         // Calculate the remaining balance
@@ -63,7 +62,8 @@ class ExpenseTrackController extends Controller
         return view('pages.expense_report', [
             'travelRequest' => $travelRequest,
             'remainingBalance' => $remainingBalance,
-            'expenses' => $expenses
+            'expenses' => $expenses,
+            'total' => $totalexpenses
         ]);
     }
 
@@ -87,7 +87,7 @@ class ExpenseTrackController extends Controller
 
             $expenseTrack = ExpenseTrack::create($validatedData);
 
-            // dd($expenseTrack);
+
             return back()->with('success', 'Expense report submitted successfully!');
         } catch (Exception $e) {
             dd($e);
@@ -136,33 +136,79 @@ class ExpenseTrackController extends Controller
         return $expenses;
     }
 //in the expenseTracks i want
-    public function expenseReport(Request $request, $id){
-        $trTrackNo = $id;
-        $expenses = ExpenseTrack::where('tr_track_no', $trTrackNo)
-            ->groupBy('tr_track_no')
-            ->selectRaw('
-                tr_track_no,
-                SUM(transportation) AS total_transportation,
-                SUM(accommodation) AS total_accommodation,
-                SUM(meal) AS total_meal,
-                SUM(other_expenses_amount) AS total_other_expenses,
-                SUM(total) AS total
-            ')
-            ->first();
 
-            $expenseReport = new ExpenseReport();
+public function expenseReport(Request $request){
+$id = $request->tr_track_no;
 
-            // Assign data from aggregatedExpenses
-            $expenseReport->expense_tracks = $expenses->tr_track_no;
-            $expenseReport->total_transportation = $expenses->total_transportation;
-            $expenseReport->total_accommodation = $expenses->total_accommodation;
-            $expenseReport->total_meal = $expenses->total_meal;
-            $expenseReport->total_other_expenses = $expenses->total_other_expenses;
-            $expenseReport->total = $expenses->total;
-            // ... assign other fields as needed
-            $expenseReport->save();
-        return $expenses;
-    }
+//make variable and store like an array
+$validatedData = $request->validate([
+    'total_transportation' => ['required', 'numeric', 'min:0'],
+    // 'purpose' => ['required', 'string'],
+    'total_meal' => ['required', 'numeric', 'min:0'],
+    'total_accommodation' => ['required', 'numeric', 'min:0'],
+    'total_other_expenses' => ['required', 'numeric', 'min:0'],
+    'total' => ['required', 'numeric', 'min:0'],
+    // 'attachment' => ['file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:2048'],
+    // $validatedData['start_date'] = date('Y-m-d', strtotime($validatedData['start_date']));
+    // $validatedData['end_date'] = date('Y-m-d', strtotime($validatedData['end_date']));
+
+]);
+
+// Generate a unique tracking number
+$validatedData['tr_track_no'] = $id;
+// dd($validatedData);
+$validatedData['user_id'] = Auth::user()->id;
+
+try {
+    // Create the budget request
+    $travelRequest = ExpenseReport::create($validatedData);
+
+    // Redirect to a success page (e.g., budget request list)
+    return back()->with('success', 'Expense report submitted successfully!');
+} catch (Exception $e) {
+    dd($e);
+    Log::error('An error occurred: ' . $e->getMessage());
+    Log::error($request->all());
+    return back()->withErrors(['error' => 'Something went wrong.']);
+}
+}
+    // public function expenseReport(Request $request, $id){
+    //     $trTrackNo = $id;
+    //     $expenses = ExpenseTrack::where('tr_track_no', $trTrackNo)
+    //         ->groupBy('tr_track_no')
+    //         ->selectRaw('
+    //             tr_track_no,
+    //             SUM(transportation) AS total_transportation,
+    //             SUM(accommodation) AS total_accommodation,
+    //             SUM(meal) AS total_meal,
+    //             SUM(other_expenses_amount) AS total_other_expenses,
+    //             SUM(total) AS total
+    //         ')
+    //         ->get();
+    //         dd($expenses);
+    //         return view('pages.report_preview', ['report' => $expenses]);
+
+    //         $expenseReport = new ExpenseReport();
+
+    //         // Assign data from aggregatedExpenses
+    //         $expenseReport->expense_tracks = $expenses->tr_track_no;
+    //         $expenseReport->total_transportation = $expenses->total_transportation;
+    //         $expenseReport->total_accommodation = $expenses->total_accommodation;
+    //         $expenseReport->total_meal = $expenses->total_meal;
+    //         $expenseReport->total_other_expenses = $expenses->total_other_expenses;
+    //         $expenseReport->total = $expenses->total;
+
+    //     try {
+
+    //         $expenseReport->save();
+    //         return back()->with('success', 'Expense report submitted successfully!');
+    //     } catch (Exception $e) {
+    //         dd($e);
+    //         Log::error('An error occurred: ' . $e->getMessage());
+    //         Log::error($request->all());
+    //         return back()->withErrors(['error' => 'Something went wrong.']);
+    //     }
+    // }
 
     //     public function expenseTrack($request)
     //     {

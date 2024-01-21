@@ -74,7 +74,7 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
                                 <tr>
                                     <td>{{$item->tr_track_no}}</td>
                                     <td>{{$item->purpose}}</td>
-                                    <td>{{$item->estimated_amount}}</td>
+                                    <td>{{number_format($item->estimated_amount, 2)}}</td>
                                     <td><a href="{{ route('expense.track', ['request' => $item->travel_request_id]) }}" class="btn btn-outline-primary btn-square">Track Expenses</a></td>
                                     <td>{{$item->start_date}}</td>
                                     <td>{{$item->status}}</td>

@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('expenses', [ExpenseTrackController::class, 'ExpenseView'])->name('ExpenseView');
 
     //expense report
-    Route::post('expense-report', [ExpenseTrackController::class, 'getAggregatedExpensesByTrackNo'])->name('expenseReport');
+    Route::post('expense-report', [ExpenseTrackController::class, 'expenseReport'])->name('expenseReport');
     //api
     Route::view('api', 'pages.test')->name('testApi');
     Route::get('api', [HomeController::class, 'test']);

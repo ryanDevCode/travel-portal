@@ -156,29 +156,33 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                             <h5>{{ number_format($travelRequest->estimated_amount, 2) }}</h5>
                             <p>Submitted On: {{ date('F j, Y', strtotime($travelRequest->created_at)) }}</p>
                             <div class="float-right">
-                                <form action="{{route('expenseReport', ['id' => $travelRequest->tr_track_no])}}" method="POST">
-                                <button class="btn btn-square btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Submit Expense Report</button>
-                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                       <div class="modal-content">
-                                          <div class="modal-header">
-                                             <h5 class="modal-title">Modal title</h5>
-                                             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                          </div>
-                                          <div class="modal-body">
-                                             <p>Review your input before submitting</p>
-                                          </div>
-                                          <div class="modal-footer">
-                                             <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                                             <button class="btn btn-primary" type="submit">Save changes</button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                                </form>
-                                <form action="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}" method="POST">
+                                @if (!empty($total))
+  <form action="{{ route('expenseReport') }}" method="POST">
+    @csrf
+    @method('POST')
+    <input type="number" value="{{ $total->total_transportation }}" hidden name="total_transportation">
+    <input type="number" value="{{ $total->total_meal }}" hidden name="total_meal">
+    <input type="number" value="{{ $total->total_accommodation }}" hidden name="total_accommodation">
+    <input type="number" value="{{ $total->total_other_expenses }}" hidden name="total_other_expenses">
+    <input type="number" value="{{ $total->total_expenses }}" hidden name="total">
+    <input type="text" value="{{ $travelRequest->tr_track_no }}" hidden name="tr_track_no">
+
+    <button class="btn btn-square btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+      Submit Expense Report
+    </button>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+      ... (modal content)
+    </div>
+  </form>
+@else
+  <p>There are no expenses to submit at this time.</p>
+@endif
+
+                                {{-- <form action="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}" method="POST">
                                     <button type="submit">Expense Report</button>
                                 </form>
+                                <a href="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}">get test</a> --}}
                             </div>
                         </div>
                     </div>
