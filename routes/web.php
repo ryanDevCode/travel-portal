@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ExpenseTrackController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::view('policy', 'pages.policy')->name('policy');
 
 
+    //Ai Assistant
+    Route::get('assistant', [ChatController::class, 'index'])->name('chat');
+    Route::post('/chat', 'App\Http\Controllers\ChatController');
+    Route::view('aitest', 'welcome');
+    // Route::post('/chat', [ChatController::class, 'chat'])->name('chat.create');
 
 
 

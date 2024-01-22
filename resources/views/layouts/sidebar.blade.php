@@ -30,7 +30,7 @@
                             <i class="icon-money"></i>
                             <span>Expenses</span></a></li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
-                            href="https://pixelstrap.freshdesk.com/support/home" target="_blank">
+                            href="{{route('chat')}}" target="_self">
                             <i class="icon-headphone-alt"></i><span>Assistant</span></a></li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
                             href="https://pixelstrap.freshdesk.com/support/home" target="_blank">
