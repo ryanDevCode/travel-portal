@@ -22,9 +22,158 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row starter-main">
-            <h3 style="color: rgba(2,0,36,1);" class="text-center mb-3" style="color: rgba(2,0,36,1);">Travel Assistant</h3>
-            {{-- <div class="col-sm-12 col-lg-5">
+        <div class="container">
+            <div class="row">
+                <livewire:chatbot-component />
+                <div class="col-sm-12 col-md-6 mb-3">
+                    <div class="card profile-box">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="greeting-user">
+                                        <h4 class="f-w-600">Welcome {{ Auth::user()->name }}</h4>
+                                        <p>Request budget and track your expenses here!</p>
+                                        <div class="whatsnew-btn"><a class="btn btn-outline-white"
+                                                href="{{ route('ExpenseView') }}">Expenses</a></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="clockbox">
+                                        <svg id="clock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+                                            <g id="face">
+                                                <circle class="circle" cx="300" cy="300" r="253.9"></circle>
+                                                <path class="hour-marks"
+                                                    d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6">
+                                                </path>
+                                                <circle class="mid-circle" cx="300" cy="300" r="16.2"></circle>
+                                            </g>
+                                            <g id="hour">
+                                                <path class="hour-hand" d="M300.5 298V142"></path>
+                                                <circle class="sizing-box" cx="300" cy="300" r="253.9"></circle>
+                                            </g>
+                                            <g id="minute">
+                                                <path class="minute-hand" d="M300.5 298V67"></path>
+                                                <circle class="sizing-box" cx="300" cy="300" r="253.9"></circle>
+                                            </g>
+                                            <g id="second">
+                                                <path class="second-hand" d="M300.5 350V55"></path>
+                                                <circle class="sizing-box" cx="300" cy="300" r="253.9">
+                                                </circle>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="badge f-10 p-0" id="txt"></div>
+                                </div>
+                            </div>
+                            <div class="cartoon"><img class="img-fluid"
+                                    src="{{ asset('assets/images/dashboard/cartoon.svg') }}" alt="vector women with leptop">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="card bg-primary p-2" style="background: linear-gradient(90deg, #0700b8 0%, #00ff88 100%);">
+                        <div class="row rounded d-flex flex-wrap justify-content-center">
+                            <div class="col-lg-3 col-sm-12 right text-center pt-2">
+                                <img src="{{ url('assets/images/weather-icons/01n.svg') }}" alt="image here"
+                                    style="height: 50px; width:auto;" class="mx-auto d-block">
+                                <div class="mt-3">
+                                    <h3>20°C</h3>
+                                    <p>Clear Sky</p>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-auto left col-sm-12 border border-top-0 border-end-0 border-bottom-0 mb-3">
+                                <p>Caloocan city <span>-{{ now()->setTimezone('Asia/Manila')->format('h:i A') }}-</span>
+                                    <span>{{ now()->format('d-F-l') }}</span>
+                                </p>
+                                <p>pressure:1030</p>
+                                <p>humidity:59</p>
+                                <form action="" class="float float-end d-flex f-w-400">
+                                    <input type="text" placeholder="search city" class="form-control form-control-sm">
+                                    <a href="" type="submit" class="btn btn-primary btn-sm">S</a>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        {{-- cards --}}
+        {{-- <div class="card-container container col-12 text-center">
+                <div class="row justify-content-center">
+                    <div class="card col-3 m-1">1</div>
+                    <div class="card col-3 m-1">2</div>
+                    <div class="card col-3 m-1">3</div>
+                </div>
+
+            </div> --}}
+        <div class="card container col-12 text-white text-center">
+            <div class="card-header">
+                <h2 class="text-secondary">Apps</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <a href="{{ route('request.show') }}">
+                        <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #5353FF">
+                            <div class="card-body d-flex pop">
+                                <img src="{{ asset('assets/images/dashboard/course/2.svg') }}" alt="Card icon"
+                                    style="height: 50px; width:auto;" class="mr-1">
+                                <h5 class="m-1 text-white">Budget Request</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-sm-6 col-md-3">
+                    <a href="{{ route('ExpenseView') }}">
+                        <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #FBA4BE">
+                            <div class="card-body d-flex pop">
+                                <img src="{{ asset('assets/images/dashboard/course/1.svg') }}" alt="Card icon"
+                                    style="height: 50px; width:auto;" class="mr-1">
+                                <h5 class="m-1 text-white">Expense Track</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #E193CD">
+                        <div class="card-body d-flex pop">
+                            <img src="{{ asset('assets/images/dashboard/course/3.svg') }}" alt="Card icon"
+                                style="height: 50px; width:auto;" class="mr-1">
+                            <h5 class="m-1">Ask AI</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #775FEE">
+                        <div class="card-body d-flex pop">
+                            <img src="{{ asset('assets/images/dashboard/course/4.svg') }}" alt="Card icon"
+                                style="height: 50px; width:auto;" class="mr-1">
+                            <h5 class="m-1">Travel Needs</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        {{-- <h3 style="color: rgba(2,0,36,1);" class="text-center mb-3" style="color: rgba(2,0,36,1);">Travel Assistant</h3> --}}
+        {{-- <div class="col-sm-12 col-lg-5">
                 <div class="card o-hidden welcome-card"
                     style="background: rgb(2,0,36);
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
@@ -37,29 +186,18 @@
                         alt="search image">
                 </div>
             </div> --}}
-            <h5 class="f-w-400">{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5>
-            {{-- <div class="card col-lg-6 p-2">
-<h5>{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5>
-            </div> --}}
-            <div class="card p-0">
-                <div class="card-header" style="background: rgb(2,0,36);
+
+
+
+        {{-- <h5 class="f-w-400">{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5> --}}
+
+        {{-- <div class="card p-0">
+                <div class="card-header"
+                    style="background: rgb(2,0,36);
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
                     <h4 class="text-white">Find what you need</h4>
 
                 </div>
-                {{-- <form action="{{route('getWeather')}}" method="GET">
-                    @csrf
-                    <input type="text" name="city" placeholder="Enter city name">
-                    <button type="submit">Get Weather</button>
-                </form>
-
-                @if (!isset($weatherDescription))
-                    <p>Weather in {{ $defaultCity }} will be displayed here...</p>
-                @else
-                    <p>Weather in {{ $city }}: {{ $weatherDescription }}</p>
-                    <p>Temperature: {{ round($temperature - 273.15) }}°C</p>
-                @endif --}}
-
                 <div class="card-body pt-4">
 
                     <div class="course-main-card">
@@ -90,15 +228,7 @@
                             </div>
                             <h6 class="f-14">Expense Tracks</h6>
                         </div>
-                        {{-- <div class="course-wrapper">
-                            <div class="course-icon-box">
-                                <div class="icon-wrap"><img src="{{ asset('assets/images/dashboard/course/4.svg') }}"
-                                        alt="marketing vector"></div><img class="arrow-bg"
-                                    src="{{ asset('assets/images/dashboard/course/back-arrow/3.png') }}"
-                                    alt="sqaure border arrow">
-                            </div>
-                            <h6 class="f-14">Ai Chatbot</h6>
-                        </div> --}}
+
                         <div class="course-wrapper">
                             <a href="https://www.example.com" style="display: block; height: 100%;">
                                 <div class="course-icon-box">
@@ -113,8 +243,8 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="card col-6">
+            </div> --}}
+        {{-- <div class="card col-6">
                 <div class="blog-box blog-list row">
                     <div class="col-sm-5"><img class="img-fluid sm-100-w"
                             src="https://laravel.pixelstrap.com/cuba/assets/images/faq/1.jpg" alt=""></div>
@@ -134,15 +264,27 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
 
 
 
-        </div>
+    </div>
     </div>
     <script type="text/javascript">
         var session_layout = '{{ session()->get('layout') }}';
+
+        // window.addEventListener('load', () => {
+        //     const chatBubbles = document.querySelectorAll('.chat-bubble');
+        //     chatBubbles.forEach(bubble => {
+        //         bubble.style.opacity = 0;
+        //         bubble.style.transform = 'translateY(20px)';
+        //         setTimeout(() => {
+        //             bubble.style.opacity = 1;
+        //             bubble.style.transform = 'translateY(0)';
+        //         }, 50 * Math.random() * chatBubbles.indexOf(bubble) + 500); // Staggered animation
+        //     });
+        // });
     </script>
 @endsection
 

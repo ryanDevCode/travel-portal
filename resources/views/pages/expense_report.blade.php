@@ -144,10 +144,11 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                 <div class="">
                     <div class="row card-header p-4 card-no-border">
                         <div class="col-lg-6 col-sm-12 right">
-                            <h5 class="f-w-400">{{$travelRequest->project_title}}</h5>
-                            <p><span class="txt-success">Track Code: </span> {{$travelRequest->tr_track_no}}</p>
-                            <p>Duration: {{ date('F j, Y', strtotime($travelRequest->start_date)) }} - {{ date('F j, Y', strtotime($travelRequest->end_date)) }}</p>
-                            <p>Travel Purpose: {{$travelRequest->purpose}}</p>
+                            <h5 class="f-w-400">{{ $travelRequest->project_title }}</h5>
+                            <p><span class="txt-success">Track Code: </span> {{ $travelRequest->tr_track_no }}</p>
+                            <p>Duration: {{ date('F j, Y', strtotime($travelRequest->start_date)) }} -
+                                {{ date('F j, Y', strtotime($travelRequest->end_date)) }}</p>
+                            <p>Travel Purpose: {{ $travelRequest->purpose }}</p>
                         </div>
                         <div class="col-lg-6 left  col-sm-12 border border-top-0 border-end-0 border-bottom-0 ">
 
@@ -156,28 +157,56 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                             <h5>{{ number_format($travelRequest->estimated_amount, 2) }}</h5>
                             <p>Submitted On: {{ date('F j, Y', strtotime($travelRequest->created_at)) }}</p>
                             <div class="float-right">
+
                                 @if (!empty($total))
-  <form action="{{ route('expenseReport') }}" method="POST">
-    @csrf
-    @method('POST')
-    <input type="number" value="{{ $total->total_transportation }}" hidden name="total_transportation">
-    <input type="number" value="{{ $total->total_meal }}" hidden name="total_meal">
-    <input type="number" value="{{ $total->total_accommodation }}" hidden name="total_accommodation">
-    <input type="number" value="{{ $total->total_other_expenses }}" hidden name="total_other_expenses">
-    <input type="number" value="{{ $total->total_expenses }}" hidden name="total">
-    <input type="text" value="{{ $travelRequest->tr_track_no }}" hidden name="tr_track_no">
+                                    <form action="{{ route('expenseReport') }}" method="POST">
+                                        @csrf
+                                        @method('POST')
+                                        <input type="number" value="{{ $total->total_transportation }}" hidden
+                                            name="total_transportation">
+                                        <input type="number" value="{{ $total->total_meal }}" hidden name="total_meal">
+                                        <input type="number" value="{{ $total->total_accommodation }}" hidden
+                                            name="total_accommodation">
+                                        <input type="number" value="{{ $total->total_other_expenses }}" hidden
+                                            name="total_other_expenses">
+                                        <input type="number" value="{{ $total->total_expenses }}" hidden
+                                            name="total">
+                                        <input type="text" value="{{ $travelRequest->tr_track_no }}" hidden
+                                            name="tr_track_no">
 
-    <button class="btn btn-square btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-      Submit Expense Report
-    </button>
 
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
-      ... (modal content)
-    </div>
-  </form>
-@else
-  <p>There are no expenses to submit at this time.</p>
-@endif
+                                            <button class="btn btn-square btn-outline-secondary" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Submit Expense
+                                                Report</button>
+                                            <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                                                role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Modal title</h5>
+                                                            <button class="btn-close" type="button"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Review your input before submitting</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button class="btn btn-primary" type="submit">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <form
+                                            action="{{ route('expenseReport', ['id' => $travelRequest->tr_track_no]) }}"
+                                            method="POST">
+                                        </form>
+                                    @else
+                                        <p>There are no expenses to submit at this time.</p>
+                                @endif
 
                                 {{-- <form action="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}" method="POST">
                                     <button type="submit">Expense Report</button>
@@ -209,14 +238,14 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                 <tbody>
                                     @foreach ($expenses as $expense)
                                         <tr>
-                                            <td>{{$expense->date}}</td>
-                                            <td>{{$expense->transportation}}</td>
-                                            <td>{{$expense->accommodation}}</td>
-                                            <td>{{$expense->meal}}</td>
-                                            <td>{{$expense->other_expenses_amount}}</td>
+                                            <td>{{ $expense->date }}</td>
+                                            <td>{{ $expense->transportation }}</td>
+                                            <td>{{ $expense->accommodation }}</td>
+                                            <td>{{ $expense->meal }}</td>
+                                            <td>{{ $expense->other_expenses_amount }}</td>
                                             <td class="action"> <a class="pdf" href="sample.pdf') }}"
                                                     target="_blank"><i class="icofont icofont-file-pdf"></i></a></td>
-                                            <td>{{$expense->total}}</td>
+                                            <td>{{ $expense->total }}</td>
                                             <td>
                                                 <ul class="action">
                                                     <li class="edit"> <a href="#"><i
@@ -345,5 +374,5 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
     <script src="{{ asset('assets/js/animation/wow/wow.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
-    <script src="{{asset('assets/js/height-equal.js')}}"></script>
+    <script src="{{ asset('assets/js/height-equal.js') }}"></script>
 @endsection

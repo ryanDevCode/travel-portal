@@ -60,9 +60,22 @@ Route::middleware('auth')->group(function () {
 
     //Ai Assistant
     Route::get('assistant', [ChatController::class, 'index'])->name('chat');
-    Route::post('/chat', 'App\Http\Controllers\ChatController');
+    // Route::post('/chat', 'App\Http\Controllers\ChatController');
     Route::view('aitest', 'welcome');
     // Route::post('/chat', [ChatController::class, 'chat'])->name('chat.create');
+    Route::get('/chat', [ChatController::class, 'index']);
+    Route::get('/ask-question/{question}', [ChatController::class, 'askQuestion']);
+    // In your routes/web.php file
+    Route::get('/chatbot', [ChatController::class, 'index']);
+    Route::post('chatbot/process', [ChatController::class, 'processMessage'])->name('aiTestKenme');
+
+
+//apps
+    Route::view('ask-ai', 'apps.chatbot');
+
+
+
+
 
 
 

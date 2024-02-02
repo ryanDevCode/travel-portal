@@ -44,7 +44,7 @@
                 </div>
             @endif
             <div class="text-end mb-2">
-                <a href="{{ route('create-request') }}" class="button btn btn-primary-gradien">Create new request</a>
+                <a href="{{ route('create-request') }}" class="button btn btn-primary">Create new request</a>
             </div>
             {{-- <div class="row justify-content-center"> --}}
             @foreach ($travelBudgetRequests as $request)
