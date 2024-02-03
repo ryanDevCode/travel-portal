@@ -19,6 +19,12 @@
     @yield('style')
 </head>
 <style>
+    .apps {
+        height: 200px;
+        width: 200px;
+        gap: 1em;
+    }
+
     .course-wrapper:hover {
         transform: scale(1.05);
         transition: all 0.2s ease-in-out;
@@ -205,7 +211,9 @@
         100% {
             opacity: 0.5;
         }
-    } */
+    }
+
+    */
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

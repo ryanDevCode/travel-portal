@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="container">
             <div class="row">
-                <livewire:chatbot-component />
+
                 <div class="col-sm-12 col-md-6 mb-3">
                     <div class="card profile-box">
                         <div class="card-body">
@@ -71,32 +71,9 @@
                         </div>
                     </div>
                 </div>
+                {{-- background: linear-gradient(90deg, #0700b8 0%, #00ff88 100%); --}}
                 <div class="col-sm-12 col-md-6">
-                    <div class="card bg-primary p-2" style="background: linear-gradient(90deg, #0700b8 0%, #00ff88 100%);">
-                        <div class="row rounded d-flex flex-wrap justify-content-center">
-                            <div class="col-lg-3 col-sm-12 right text-center pt-2">
-                                <img src="{{ url('assets/images/weather-icons/01n.svg') }}" alt="image here"
-                                    style="height: 50px; width:auto;" class="mx-auto d-block">
-                                <div class="mt-3">
-                                    <h3>20°C</h3>
-                                    <p>Clear Sky</p>
-                                </div>
-
-                            </div>
-                            <div class="col-lg-auto left col-sm-12 border border-top-0 border-end-0 border-bottom-0 mb-3">
-                                <p>Caloocan city <span>-{{ now()->setTimezone('Asia/Manila')->format('h:i A') }}-</span>
-                                    <span>{{ now()->format('d-F-l') }}</span>
-                                </p>
-                                <p>pressure:1030</p>
-                                <p>humidity:59</p>
-                                <form action="" class="float float-end d-flex f-w-400">
-                                    <input type="text" placeholder="search city" class="form-control form-control-sm">
-                                    <a href="" type="submit" class="btn btn-primary btn-sm">S</a>
-                                </form>
-                            </div>
-                        </div>
-
-                    </div>
+                    <livewire:weather-component />
                 </div>
             </div>
         </div>
@@ -121,59 +98,97 @@
         <div class="card container col-12 text-white text-center">
             <div class="card-header">
                 <h2 class="text-secondary">Apps</h2>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 col-md-3">
-                    <a href="{{ route('request.show') }}">
-                        <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #5353FF">
+                <div class="row justify-content-center">
+                    <a href="{{ route('request.show') }}"
+                        class="btn btn-outline-primary col col-3 col-md-2 col-sm-12 apps text-center d-flex flex-column p-5 rounded m-2">
+                        <img src="{{ asset('assets/images/dashboard/course/2.svg') }}" alt="img here"
+                            style="height: auto; width:70px;" class="mx-auto pop">
+                        <span>Budget Expenses</span>
+                    </a>
+                    <a href="{{ route('ExpenseView') }}"
+                        class="btn btn-outline-primary col col-3 col-md-2 col-sm-12 apps text-center d-flex flex-column p-5 rounded m-2">
+                        <img src="{{ asset('assets/images/dashboard/course/1.svg') }}" alt="img here"
+                            style="height: auto; width:70px;" class="mx-auto pop">
+                        <span>Expense Track</span>
+                    </a>
+                    <a href="{{ route('Ai') }}"
+                        class="btn btn-outline-primary col col-3 col-md-2 col-sm-12 apps text-center d-flex flex-column p-5 rounded m-2">
+                        <img src="{{ asset('assets/images/dashboard/course/3.svg') }}" alt="img here"
+                            style="height: auto; width:70px;" class="mx-auto pop">
+                        <span>Ask AI</span>
+                    </a>
+                    <a href="{{ route('request.show') }}"
+                        class="btn btn-outline-primary col col-3 col-md-2 col-sm-12 apps text-center d-flex flex-column p-5 rounded m-2">
+                        <img src="{{ asset('assets/images/dashboard/course/4.svg') }}" alt="img here"
+                            style="height: auto; width:70px;" class="mx-auto pop">
+                        <span>Travel Needs</span>
+                    </a>
+
+
+
+
+
+
+                    {{-- <a href="{{ route('request.show') }}"
+                        class=" btn btn-outline-primary col col-sm-6 col-md-3 mb-3 text-center">
+                        <div class="">
                             <div class="card-body d-flex pop">
                                 <img src="{{ asset('assets/images/dashboard/course/2.svg') }}" alt="Card icon"
-                                    style="height: 50px; width:auto;" class="mr-1">
-                                <h5 class="m-1 text-white">Budget Request</h5>
+                                    style="height: 70px; width:auto;" class="mx-auto">
                             </div>
+                            <span>Budget Expenses</span>
+
                         </div>
                     </a>
-                </div>
 
-                <div class="col-sm-6 col-md-3">
-                    <a href="{{ route('ExpenseView') }}">
-                        <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #FBA4BE">
+                    <div
+                        class="col h-100 col-12 col-sm-6 col-md-3 mb-3 text-center border border-primary bg-danger m-1 p-1">
+                        <a href="{{ route('request.show') }}" class=" btn btn-outline-primary">
+                            <div class="card-body d-flex pop">
+                                <img src="{{ asset('assets/images/dashboard/course/2.svg') }}" alt="Card icon"
+                                    style="height: 70px; width:auto;" class="mx-auto">
+                            </div>
+                            <span>Budget Expenses</span>
+                        </a>
+                    </div>
+                    <div class="col h-100 col-12 col-sm-6 col-md-3 mb-3 text-center">
+                        <a href="{{ route('ExpenseView') }}" class=" btn btn-outline-primary">
                             <div class="card-body d-flex pop">
                                 <img src="{{ asset('assets/images/dashboard/course/1.svg') }}" alt="Card icon"
-                                    style="height: 50px; width:auto;" class="mr-1">
-                                <h5 class="m-1 text-white">Expense Track</h5>
+                                    style="height: 70px; width:auto;" class="mx-auto">
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #E193CD">
-                        <div class="card-body d-flex pop">
-                            <img src="{{ asset('assets/images/dashboard/course/3.svg') }}" alt="Card icon"
-                                style="height: 50px; width:auto;" class="mr-1">
-                            <h5 class="m-1">Ask AI</h5>
-                        </div>
+                            <span>Expense Track</span>
+                        </a>
                     </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="background: #775FEE">
-                        <div class="card-body d-flex pop">
-                            <img src="{{ asset('assets/images/dashboard/course/4.svg') }}" alt="Card icon"
-                                style="height: 50px; width:auto;" class="mr-1">
-                            <h5 class="m-1">Travel Needs</h5>
-                        </div>
+                    <div class="col h-100 col-12 col-sm-6 col-md-3 mb-3 text-center">
+                        <a href="{{ route('Ai') }}" class=" btn btn-outline-primary">
+                            <div class="card-body d-flex pop">
+                                <img src="{{ asset('assets/images/dashboard/course/3.svg') }}" alt="Card icon"
+                                    style="height: 70px; width:auto;" class="mx-auto">
+                            </div>
+                            <span>Ask AI</span>
+                        </a>
                     </div>
+                    <div class="col h-100 col-12 col-sm-6 col-md-3 mb-3 text-center">
+                        <a href="{{ route('request.show') }}" class=" btn btn-outline-primary">
+                            <div class="card-body d-flex pop">
+                                <img src="{{ asset('assets/images/dashboard/course/4.svg') }}" alt="Card icon"
+                                    style="height: 70px; width:auto;" class="mx-auto">
+                            </div>
+                            <span>Travel Needs</span>
+                        </a>
+                    </div> --}}
+
                 </div>
             </div>
-        </div>
 
 
 
 
 
 
-        {{-- <h3 style="color: rgba(2,0,36,1);" class="text-center mb-3" style="color: rgba(2,0,36,1);">Travel Assistant</h3> --}}
-        {{-- <div class="col-sm-12 col-lg-5">
+            {{-- <h3 style="color: rgba(2,0,36,1);" class="text-center mb-3" style="color: rgba(2,0,36,1);">Travel Assistant</h3> --}}
+            {{-- <div class="col-sm-12 col-lg-5">
                 <div class="card o-hidden welcome-card"
                     style="background: rgb(2,0,36);
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
@@ -189,9 +204,9 @@
 
 
 
-        {{-- <h5 class="f-w-400">{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5> --}}
+            {{-- <h5 class="f-w-400">{{date('l, F j Y, g:i A', strtotime('now +8 hours'))}}</h5> --}}
 
-        {{-- <div class="card p-0">
+            {{-- <div class="card p-0">
                 <div class="card-header"
                     style="background: rgb(2,0,36);
                 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
@@ -244,7 +259,7 @@
                     </div>
                 </div>
             </div> --}}
-        {{-- <div class="card col-6">
+            {{-- <div class="card col-6">
                 <div class="blog-box blog-list row">
                     <div class="col-sm-5"><img class="img-fluid sm-100-w"
                             src="https://laravel.pixelstrap.com/cuba/assets/images/faq/1.jpg" alt=""></div>
@@ -268,7 +283,7 @@
 
 
 
-
+        </div>
     </div>
     </div>
     <script type="text/javascript">
