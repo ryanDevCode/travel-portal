@@ -76,43 +76,6 @@
                 </div>
             </div>
         </div>
-        <button id="openModalBtn">Open Modal</button>
-
-{{-- <div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h2>Custom Modal</h2>
-    <p>This is a custom modal.</p>
-  </div>
-</div> --}}
-        <livewire:currency-converter />
-        {{-- <div class="container border border-primary p-4" style="height: 500px; width: 500px;">
-            <h5 class="f-w-100">Converted Amount: 12, 000</h5>
-
-            <form wire:submit.prevent="convert" class="mt-4">
-                <div class="form-group mt-1">
-                    <label for="amount">Enter amount</label>
-                    <input type="number" wire:model.lazy="amount" id="amount" class="form-control">
-                </div>
-                <div class="form-group mt-2">
-                    <label for="convertFrom">Convert From</label>
-                    <select name="convertFrom" id="convertFrom" class="form-control">
-                        <option value="Kenme" class="form-control">Kenemekek</option>
-                        <option value="Kenme" class="form-control">Kenemekek</option>
-                        <option value="Kenme" class="form-control">Kenemekek</option>
-                        <option value="Kenme" class="form-control">Kenemekek</option>
-                    </select>
-                </div>
-                <div class="form-group mt-2">
-                    <label for="convertTo">Convert To</label>
-                    <select name="convertTo" id="convertTo" class="form-control">
-                        <option value="Kenme">Kenemekek</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Convert</button>
-            </form>
-
-        </div> --}}
 
         <div class="card container col-12 text-white text-center">
             <div class="card-header">
@@ -151,18 +114,7 @@
                     </a>
 
                 </div>
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">Large modal</button>
-               <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
-                           <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">...</div>
-                     </div>
-                  </div>
-               </div>
+
             </div>
 
 
@@ -176,31 +128,7 @@
     </div>
     <script type="text/javascript">
         var session_layout = '{{ session()->get('layout') }}';
-        // Get the modal element
-var modal = document.getElementById("myModal");
 
-// Get the button that opens the modal
-var btn = document.getElementById("openModalBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// Open the modal when the button is clicked
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// Close the modal when the <span> element is clicked
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// Close the modal when the user clicks outside of it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
     </script>
 @endsection
 

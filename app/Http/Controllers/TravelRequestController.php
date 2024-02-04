@@ -14,7 +14,8 @@ use GuzzleHttp\Client;
 class TravelRequestController extends Controller
 {
     //
-    public function request(Request $request){
+    public function request(Request $request)
+    {
 
 
         return view('pages.create_request');
@@ -28,42 +29,9 @@ class TravelRequestController extends Controller
         $cityWeather = $getWeather->json();
         return view('pages.travel_request', ['cityWeather' => $cityWeather]);
     }
-    // https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=74dbc403409150f26d159555d26f6a22
-    //https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-
-    public function apiTest()
-    {
-        // $response = Http::get('https://api.openweathermap.org/data/2.5/weather?q=' . $city . '&appid=' . env('OPENWEATHER_API_KEY'));
-
-        $response = Http::get('https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=74dbc403409150f26d159555d26f6a22');
-        // https://api.openweathermap.org/data/2.5/weather?q=Manila&appid=74dbc403409150f26d159555d26f6a22
-        $apitest = $response->json();
-
-        //make method for searching weather for places
-        return view('pages.test', ['api' => $apitest]);
-    }
-    // public function getWeather(Request $request)
-
-    //     // $defaultCity = 'Manila';
-    //     // $city = $request->input('city') ?? $this->defaultCity;
-    //     // $apiKey = env('OPENWEATHER_API_KEY');
-
-    //     // $client = new Client();
-    //     // $response = $client->get('https://api.openweathermap.org/data/2.5/weather?q=' . $city . '&appid=' . env('OPENWEATHER_API_KEY'));
 
 
-    //     // $data = json_decode($response->getBody()->getContents());
 
-    //     // $weatherDescription = $data->weather[0]->description;
-    //     // $temperature = $data->main->temp;
-
-    //     // return view('pages.test', [
-    //     //     'weatherDescription' => $weatherDescription ,
-    //     //     'temperature' =>$temperature,
-    //     //     'defaultCity' => $defaultCity,
-    //     //     'city' => $city
-    //     // ]);
-    // }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -71,16 +39,16 @@ class TravelRequestController extends Controller
             'name' => ['required', 'string', 'max:50'],
             'destination' => ['required', 'string', 'max:50'],
             'estimated_amount' => ['required', 'numeric', 'min:0'],
-            // 'purpose' => ['required', 'string'],
             'start_date' => ['required'],
             'end_date' => ['required'],
             'purpose' => ['required', 'string', 'max:255'],
-            // 'attachment' => ['file', 'mimes:pdf,doc,docx,jpg,jpeg,png', 'max:2048'],
-            // $validatedData['start_date'] = date('Y-m-d', strtotime($validatedData['start_date']));
-            // $validatedData['end_date'] = date('Y-m-d', strtotime($validatedData['end_date']));
 
         ]);
+        //handle upload
 
+        //add travel_request_id for the documents table
+
+        //add the path on the attachment column
         // Generate a unique tracking number
         $validatedData['tr_track_no'] = Str::random(12);
         // dd($validatedData);
