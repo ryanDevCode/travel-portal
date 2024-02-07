@@ -86,6 +86,7 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                         <input type="number" class="form-control" id="accommodation" name="accommodation"
                                             required>
                                     </div>
+                                    <input type="text" name="travel_request_id" value="{{$request}}" hidden>
 
                                     <div class="col-md-6">
                                         <label for="meal" class="form-label">Meal:</label>

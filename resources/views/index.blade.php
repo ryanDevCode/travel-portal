@@ -112,6 +112,12 @@
                         <span>Currency Converter</span>
 
                     </a>
+                    <a href="{{ route('Restaurant') }}"
+                        class="btn btn-outline-primary col col-3 col-md-2 col-sm-12 apps text-center d-flex flex-column p-5 rounded m-2">
+                        <img src="{{ asset('assets/images/dashboard/course/4.svg') }}" alt="img here"
+                            style="height: auto; width:70px;" class="mx-auto pop">
+                        <span>Find Restaurant</span>
+                    </a>
 
                 </div>
 

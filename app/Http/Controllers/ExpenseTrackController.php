@@ -37,10 +37,7 @@ class ExpenseTrackController extends Controller
         // Get the travel request by ID
         $travelRequest = TravelRequest::findOrFail($request);
 
-        // Get the total amount of expenses with the same ID
-        // $totalExpenses = ExpenseTrack::where('tr_track_no', $request)->sum('transportation');
         $tr = $travelRequest->tr_track_no;
-        // dd($tr);
         $totalexpenses = ExpenseTrack::where('tr_track_no', $tr)
             ->groupBy('tr_track_no')
             ->selectRaw(
@@ -64,7 +61,8 @@ class ExpenseTrackController extends Controller
             'travelRequest' => $travelRequest,
             'remainingBalance' => $remainingBalance,
             'expenses' => $expenses,
-            'total' => $totalexpenses
+            'total' => $totalexpenses,
+            'request' => $request,
         ]);
     }
 
@@ -78,11 +76,11 @@ class ExpenseTrackController extends Controller
             'other_expenses_amount' => ['nullable', 'numeric'],
             'other_expenses' => ['nullable', 'string', 'max:255'],
             'date' => ['required', 'date'],
+            'travel_request_id' => ['required'],
         ]);
         $validatedData['total'] = $validatedData['transportation'] + $validatedData['accommodation'] + $validatedData['meal'] + ($validatedData['other_expenses_amount'] ?? 0);
         $validatedData['expense_id'] = Str::random(12);
         $validatedData['user_id'] = Auth::user()->id;
-
 
         try {
 
@@ -194,19 +192,19 @@ class ExpenseTrackController extends Controller
 
     public function ExpenseView()
     {
-
         $user = Auth::user();
+        $totalExpenses = ExpenseTrack::with('user', 'trackRequests')->where('user_id', $user->id)->get();
+        $totalBalance = TravelRequest::with('trackExpenses')->where('user_id', $user->id)->get();
+
+        //total of all of the expenses of that user
+        $total = $totalExpenses->sum('total');
+        $balance = $totalBalance->sum('estimated_amount');
         $expenses = DB::table('travel_requests')
             ->where('travel_requests.user_id', '=', $user->id)
             ->where('travel_requests.status', '=', 'approved')  // Filter for approved requests
             ->orderBy('travel_requests.created_at', 'desc')
             ->paginate(10);
 
-
-
-
-
-
-        return view('pages.expenses', ['data' => $expenses]);
+        return view('pages.expenses', compact('totalExpenses', 'expenses','total', 'balance'));
     }
 }

@@ -11,7 +11,7 @@ class TravelRequest extends Model
     protected $table = 'travel_requests';
     protected $primaryKey = 'travel_request_id';
     protected $fillable = [
-        'destination', 'project_title', 'start_date', 'end_date', 'purpose', 'estimated_amount', 'attachment', 'tr_track_no', 'status', 'user_id'
+        'destination', 'project_title', 'start_date', 'end_date', 'purpose', 'estimated_amount', 'attachment', 'tr_track_no', 'status', 'user_id', 'travel_request_id'
     ];
 
     public function user()
@@ -21,6 +21,10 @@ class TravelRequest extends Model
     public function expenseTracks()
     {
         return $this->hasMany(ExpenseTrack::class, 'tr_track_no'); // Adjust foreign key if needed
+    }
+    public function trackExpenses()
+    {
+        return $this->hasMany(ExpenseTrack::class, 'travel_request_id'); // Adjust foreign key if needed
     }
 
 }

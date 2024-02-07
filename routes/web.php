@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
 
 //apps
     Route::view('ask-ai', 'apps.chatbot')->name('Ai');
+    Route::view('find-restaurant', 'apps.find-restaurant')->name('Restaurant');
 
 
 

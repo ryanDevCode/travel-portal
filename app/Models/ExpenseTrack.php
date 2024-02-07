@@ -11,7 +11,7 @@ class ExpenseTrack extends Model
     protected $table = 'travel_expenses';
     protected $primaryKey = 'expense_id';
     protected $fillable = [
-        'tr_track_no', 'transportation', 'accomodation', 'meal', 'other_expenses_amount', 'other_expenses', 'date', 'user_id' , 'accommodation', 'attachments', 'total',
+        'tr_track_no', 'transportation', 'accomodation', 'meal', 'other_expenses_amount', 'other_expenses', 'date', 'user_id', 'accommodation', 'attachments', 'total','travel_request_id'
     ];
     public function travelRequests()
     {
@@ -23,7 +23,11 @@ class ExpenseTrack extends Model
     }
 
     public function user()
-{
-    return $this->belongsTo(User::class); // Assuming a foreign key named 'user_id'
-}
+    {
+        return $this->belongsTo(User::class); // Assuming a foreign key named 'user_id'
+    }
+    public function trackRequests()
+    {
+        return $this->belongsTo(TravelRequest::class, 'travel_request_id');
+    }
 }
