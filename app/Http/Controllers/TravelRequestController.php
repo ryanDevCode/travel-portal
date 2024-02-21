@@ -10,7 +10,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
-
+use Illuminate\Support\Facades\Storage;
 class TravelRequestController extends Controller
 {
     //
@@ -42,23 +42,27 @@ class TravelRequestController extends Controller
             'start_date' => ['required'],
             'end_date' => ['required'],
             'purpose' => ['required', 'string', 'max:255'],
+            'attachment' => ['file', 'mimes:jpeg,png,jpg,gif,pdf,doc,docx,bmp'],
+           
 
         ]);
         //handle upload
-
+        if ($request->hasFile('attachment')) {
+            $attachment = $request->file('attachment')->store(options: 'public');
+            // $attachment = Storage::disk('public')->put('/', $request->file('attachment'));
+        }
         //add travel_request_id for the documents table
-
-        //add the path on the attachment column
+        
         // Generate a unique tracking number
         $validatedData['tr_track_no'] = Str::random(12);
         // dd($validatedData);
         $validatedData['status'] = 'pending';
         $validatedData['user_id'] = Auth::user()->id;
+        $validatedData['attachment'] = $attachment ?? null;
 
         try {
             // Create the budget request
-            $travelRequest = TravelRequest::create($validatedData);
-
+            $travelRequest = TravelRequest::create($validatedData,);
             // Redirect to a success page (e.g., budget request list)
             return redirect()->route('request.show')->with('success', 'Budget request created successfully!');
         } catch (Exception $e) {
@@ -73,7 +77,7 @@ class TravelRequestController extends Controller
     {
 
         $user = $request->user(); // Retrieve authenticated user from request
-        $travelBudgetRequests = $user->travelRequests()->paginate(10);
+        $travelBudgetRequests = $user->travelRequests()->orderBy('created_at', 'desc')->paginate(10);
 
         return view('pages.travel_request', ['travelBudgetRequests' => $travelBudgetRequests]); // Pass data using array syntax
     }

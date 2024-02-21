@@ -1,8 +1,10 @@
 <div>
     {{-- The Master doesn't talk, he acts. --}}
-    <div class="card bg-primary p-2 txt-dark"
-        style="background-image: url('/assets/images/gradient.jpg');
-                    background-size: cover;">
+    <div class="card bg-primary p-2 txt-white" style="background: linear-gradient(90deg, #7366FF 0%, #3f34b7 100%)">
+    {{-- style="background: linear-gradient(90deg, #7366FF 0%, #459CF2 100%)"> --}}
+    {{-- style="background: linear-gradient(270deg, #04a2c9 0%, #8c8fe1 100%)"> --}}
+        {{-- style="background-image: url('/assets/images/gradient.jpg');
+                    background-size: cover;"> --}}
         @if ($weatherData)
             @php
                 $iconCode = $weatherData['weather'][0]['icon'];
@@ -14,7 +16,7 @@
             @endphp
             <div class="row rounded d-flex flex-wrap justify-content-center">
                 <div class="col-lg-3 col-sm-12 right text-center pt-2">
-                    <img src="{{ url('assets/images/weather-icons/' . $iconCode . '.svg') }}" alt="{{ $weatherData['weather'][0]['description'] . $iconCode }}"
+                    <img src="{{ url('assets/images/weather-icons/' . $iconCode . '.png') }}" alt="{{ $weatherData['weather'][0]['description'] . $iconCode }}"
                         style="height: 50px; width:auto;" class="mx-auto d-block">
                     <div class="mt-3">
                         <h3>{{ $weatherData['main']['temp'] }}°C</h3>

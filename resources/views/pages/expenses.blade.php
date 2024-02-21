@@ -35,7 +35,6 @@
                     </div>
                     <h5>Spent</h5>
                     <h1>₱{{ number_format((float) $total, 2) }}</h1>
-
                 </div>
                 <div class="card col-sm-12 col-lg-5 p-3 m-2 text-white"
                     style="background-color: #0093E9;
@@ -49,6 +48,7 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
                     <h1>₱{{ number_format((float) $balance, 2) }}</h1>
                 </div>
             </div>
+            
             <div class="col-sm-12">
                 <div class="">
                     <div class="card-header p-3">
@@ -72,7 +72,7 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
                                     <tr>
                                         <td>{{ $item->tr_track_no }}</td>
                                         <td>{{ $item->purpose }}</td>
-                                        <td>{{ number_format($item->estimated_amount, 2) }}</td>
+                                        <td>₱{{ number_format($item->estimated_amount, 2) }}</td>
                                         <td><a href="{{ route('expense.track', ['request' => $item->travel_request_id]) }}"
                                                 class="btn btn-outline-primary btn-square">Track Expenses</a></td>
                                         <td>{{ $item->start_date }}</td>

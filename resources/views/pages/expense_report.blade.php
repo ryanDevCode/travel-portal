@@ -3,13 +3,11 @@
 @section('title', 'Default')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
 @endsection
 
 @section('style')
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}"> --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/datatables.css') }}">
+
 @endsection
 
 @section('breadcrumb-title')
@@ -36,8 +34,8 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                     src="{{ asset('assets/images/dashboard/hand.svg') }}" alt="hand vector"></span></h4>
 
 
-                        <h4 class="f-w-400">Total Budget: {{ number_format($travelRequest->estimated_amount, 2) }}</h4>
-                        <h5 class="f-w-400">Remaining Balance {{ number_format($remainingBalance, 2) }}</h5>
+                        <h4 class="f-w-400">Total Budget: ₱{{ number_format($travelRequest->estimated_amount, 2) }}</h4>
+                        <h5 class="f-w-400">Remaining Balance ₱{{ number_format($remainingBalance, 2) }}</h5>
                     </div><img class="welcome-img" src="{{ asset('assets/images/dashboard/widget.svg') }}"
                         alt="search image">
                 </div>
@@ -86,7 +84,7 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                         <input type="number" class="form-control" id="accommodation" name="accommodation"
                                             required>
                                     </div>
-                                    <input type="text" name="travel_request_id" value="{{$request}}" hidden>
+                                    <input type="text" name="travel_request_id" value="{{ $request }}" hidden>
 
                                     <div class="col-md-6">
                                         <label for="meal" class="form-label">Meal:</label>
@@ -115,23 +113,7 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                     </div>
 
                                 </div>
-                                {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
-                                   <div class="modal-dialog modal-dialog-centered" role="document">
-                                      <div class="modal-content">
-                                         <div class="modal-header">
-                                            <h5 class="modal-title">Modal title</h5>
-                                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                         </div>
-                                         <div class="modal-body">
-                                            <p>Review your input before submitting</p>
-                                         </div>
-                                         <div class="modal-footer">
-                                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
-                                            <button class="btn btn-primary" type="submit">Save changes</button>
-                                         </div>
-                                      </div>
-                                   </div>
-                                </div> --}}
+
                             </form>
                         </div>
                     </div>
@@ -155,68 +137,95 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
 
                             <p>Amount:</p>
 
-                            <h5>{{ number_format($travelRequest->estimated_amount, 2) }}</h5>
+                            <h5>₱{{ number_format($travelRequest->estimated_amount, 2) }}</h5>
                             <p>Submitted On: {{ date('F j, Y', strtotime($travelRequest->created_at)) }}</p>
                             <div class="float-right">
 
                                 @if (!empty($total))
-                                    <form action="{{ route('expenseReport') }}" method="POST">
-                                        @csrf
-                                        @method('POST')
-                                        <input type="number" value="{{ $total->total_transportation }}" hidden
-                                            name="total_transportation">
-                                        <input type="number" value="{{ $total->total_meal }}" hidden name="total_meal">
-                                        <input type="number" value="{{ $total->total_accommodation }}" hidden
-                                            name="total_accommodation">
-                                        <input type="number" value="{{ $total->total_other_expenses }}" hidden
-                                            name="total_other_expenses">
-                                        <input type="number" value="{{ $total->total_expenses }}" hidden
-                                            name="total">
-                                        <input type="text" value="{{ $travelRequest->tr_track_no }}" hidden
-                                            name="tr_track_no">
+                                    <button class="btn btn-outline-danger" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalCenter">Submit Expense
+                                        Report</button>
 
-
-                                            <button class="btn btn-square btn-outline-secondary" type="button"
-                                                data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Submit Expense
-                                                Report</button>
-                                            <div class="modal fade" id="exampleModalCenter" tabindex="-1"
-                                                role="dialog" aria-labelledby="exampleModalCenter" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Modal title</h5>
-                                                            <button class="btn-close" type="button"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p>Review your input before submitting</p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                            <button class="btn btn-primary" type="submit">Save
-                                                                changes</button>
-                                                        </div>
-                                                    </div>
+                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenter" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Expense Summary</h5>
+                                                    <button class="btn-close" type="button" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
+                                                <p class="txt-danger text-center pt-2">Review before submiting</p>
+                                                <div class="table">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr class="border-bottom-primary text-center">
+                                                                <th scope="col">Expense Type</th>
+                                                                <th scope="col">Total Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Transportation</td>
+                                                                <td>₱{{ number_format($total->total_transportation,2) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Accomodation</td>
+                                                                <td>₱{{ number_format($total->total_accommodation,2) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Food</td>
+                                                                <td>₱{{ number_format($total->total_meal,2) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Other Expenses</td>
+                                                                <td>₱{{ number_format($total->total_other_expenses,2) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Overall Total</td>
+                                                                <td>₱{{ number_format($total->total_expenses,2) }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <form action="{{ route('expenseReport') }}" method="POST">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <input type="number" value="{{ $total->total_transportation }}"
+                                                             hidden name="total_transportation">
+                                                        <input type="number" value="{{ $total->total_meal }}"
+                                                             hidden name="total_meal">
+                                                        <input type="number" value="{{ $total->total_accommodation }}"
+                                                             hidden name="total_accommodation">
+                                                        <input type="number" value="{{ $total->total_other_expenses }}"
+                                                             hidden name="total_other_expenses">
+                                                        <input type="number" value="{{ $total->total_expenses }}"
+                                                             hidden name="total">
+                                                        <input type="text" value="{{ $travelRequest->tr_track_no }}"
+                                                             hidden name="tr_track_no">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button class="btn btn-secondary" type="button"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                    <button class="btn btn-primary" type="submit">Save
+                                                        changes</button>
+                                                </div>
+
+                                                </form>
                                             </div>
-
-                                        <form
-                                            action="{{ route('expenseReport', ['id' => $travelRequest->tr_track_no]) }}"
-                                            method="POST">
-                                        </form>
-                                    @else
-                                        <p>There are no expenses to submit at this time.</p>
+                                        </div>
+                                    </div>
+                                @else
+                                    <p>There are no expenses to submit at this time.</p>
                                 @endif
-
-                                {{-- <form action="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}" method="POST">
-                                    <button type="submit">Expense Report</button>
-                                </form>
-                                <a href="{{route('expenseReport' , ['id' => $travelRequest->tr_track_no])}}">get test</a> --}}
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
+
+
                         <div class="table-responsive">
                             <table class="display" id="basic-6">
                                 <thead>
@@ -240,10 +249,10 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                     @foreach ($expenses as $expense)
                                         <tr>
                                             <td>{{ $expense->date }}</td>
-                                            <td>{{ $expense->transportation }}</td>
-                                            <td>{{ $expense->accommodation }}</td>
-                                            <td>{{ $expense->meal }}</td>
-                                            <td>{{ $expense->other_expenses_amount }}</td>
+                                            <td>₱{{ number_format($expense->transportation, 2) }}</td>
+                                            <td>₱{{ number_format($expense->accommodation, 2) }}</td>
+                                            <td>₱{{ number_format($expense->meal, 2) }}</td>
+                                            <td>₱{{ number_format($expense->other_expenses_amount, 2) }}</td>
                                             <td class="action"> <a class="pdf" href="sample.pdf') }}"
                                                     target="_blank"><i class="icofont icofont-file-pdf"></i></a></td>
                                             <td>{{ $expense->total }}</td>
@@ -259,18 +268,6 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                {{-- <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Salary</th>
-                                        <th>Office</th>
-                                        <th>CV </th>
-                                        <th>Status</th>
-                                        <th>E-mail</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot> --}}
                             </table>
                         </div>
                     </div>
@@ -282,67 +279,7 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
 
 
 
-            {{-- <form method="POST" action="{{ route('expense.track.store') }}">
-                @csrf
-                <h5>Track Your Expenses</h5>
-                <div class="row gy-3">
-                    <input class="form-control" hidden name="tr_track_no" value="{{ $travelRequest->tr_track_no }}">
-                    <div class="col-md-6">
-                        <label for="transportation" class="form-label">Transportation:</label>
-                        <input type="number" class="form-control" id="transportation" name="transportation" required>
-                    </div>
 
-                    <div class="col-md-6">
-                        <label for="accommodation" class="form-label">Accommodation:</label>
-                        <input type="number" class="form-control" id="accommodation" name="accommodation" required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="meal" class="form-label">Meal:</label>
-                        <input type="number" class="form-control" id="meal" name="meal" required>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="other_expenses_amount" class="form-label">Other Expenses Amount:</label>
-                        <input type="number" class="form-control" id="other_expenses_amount" name="other_expenses_amount">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="other_expenses" class="form-label">Other Expenses Description:</label>
-                        <input type="text" class="form-control" id="other_expenses" name="other_expenses">
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="date" class="form-label">Date:</label>
-                        <input type="date" class="form-control" id="date" name="date" required>
-                    </div>
-
-                    <div class="col-12 mt-4">
-                        <button type="submit" class="btn btn-primary">Submit Expense Report</button>
-                    </div>
-
-                </div>
-
-            </form> --}}
-
-
-
-
-
-
-            {{--
-            @foreach ($travelBudgetRequests as $request)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Destination: {{ $request->destination }}</h5>
-                    <p class="card-text">Status: {{ $request->status }} approval</p>
-                    @if ($request->status == 'approved')
-                        <a href="{{ route('expense_reports.create', $request->id) }}" class="btn btn-primary">Create Expense Report</a>
-                        <a href="">Expense Report</a>
-                    @endif
-                </div>
-            </div>
-        @endforeach --}}
 
 
         </div>
@@ -361,18 +298,10 @@ background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%); --}}
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        zIndex: 9999 // Ensure it floats above other elements
+        zIndex: 9999
     });
 </script>
 @section('script')
-    {{-- dashboard 2 --}}
-    {{-- <script src="{{ asset('assets/js/chart/apex-chart/apex-chart.js') }}"></script>
-    <script src="{{ asset('assets/js/chart/apex-chart/stock-prices.js') }}"></script>
-    <script src="{{ asset('assets/js/counter/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/js/counter/jquery.counterup.min.js') }}"></script>
-    <script src="{{ asset('assets/js/counter/counter-custom.js') }}"></script>
-    <script src="{{ asset('assets/js/dashboard/dashboard_2.js') }}"></script>
-    <script src="{{ asset('assets/js/animation/wow/wow.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/datatable/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatables/datatable.custom.js') }}"></script>
     <script src="{{ asset('assets/js/height-equal.js') }}"></script>

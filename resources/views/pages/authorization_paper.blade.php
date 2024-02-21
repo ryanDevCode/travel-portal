@@ -16,9 +16,6 @@
     }
 
     #letter-body {
-        /* size: 8.5in 11in; */
-        /* width: 8.5in;
-        height: 11in; */
         margin: auto;
         padding: 2em;
         border: 1px solid black;
@@ -31,17 +28,6 @@
     .letter {
         font-size: 1.2em;
     }
-    /* .signature {
-    position: relative;
-    margin-top: 2em;
-    padding: 2em;
-} */
-
-/* #signature-photo {
-    position: absolute;
-    top: -10px;
-    left: 0;
-} */
 
 </style>
 
@@ -51,12 +37,13 @@
             <h1>Travel Budget Auhorization</h1>
         </div>
         <div class="letter">
-            <p>Dear {{Auth::user()->name}},</p>
+            <p>Dear {{ Auth::user()->name }},</p>
             <p>We are pleased to inform you that your travel budget request for [Project Name] has been successfully
                 approved by the [Budget Approval Committee/Executive Board/Relevant Entity]. This allocation
                 demonstrates
                 our confidence in your proposed endeavor and its potential impact on [Company goals/mission].</p>
-            <p>The approved budget for your trip totals ₱ {{$data[0]['estimated_amount']}}, encompassing the following expense
+            <p>The approved budget for your trip totals ₱ {{ $data[0]['estimated_amount'] }}, encompassing the following
+                expense
                 categories:</p>
             <ul>
                 <li>Travel: Airfare, accommodations, ground transportation</li>

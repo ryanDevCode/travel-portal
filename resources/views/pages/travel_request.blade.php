@@ -58,7 +58,7 @@
                     </div>
                     <div class="right col border border-top-0 border-end-0 border-bottom-0 ">
                         <p>Reimbursement Amount</p>
-                        <h4 class="f-w-400">{{ number_format($request->estimated_amount, 2) }}</h4>
+                        <h4 class="f-w-400">₱{{ number_format($request->estimated_amount, 2) }}</h4>
                         {{-- <p class="card-text badge {{ $request->status == 'approved' ? 'badge-success' : 'badge-warning' }}">
                         {{ $request->status }}</p> --}}
                         <p
@@ -73,7 +73,7 @@
                         <p>Submitted: {{ date('F j, Y', strtotime($request->created_at)) }}</p>
                     </div>
                     @if ($request->status == 'approved')
-                        <a href="{{ route('expense.track', ['request' => $request]) }}"
+                        <a href="{{ route('document.index', ['request' => $request->tr_track_no]) }}"
                             class="btn btn-square btn-outline-success btn-sm">Download Authorizarion Letter</a>
                     @endif
                 </div>

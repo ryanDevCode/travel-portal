@@ -26,7 +26,7 @@ class ChatbotComponent extends Component
             $response = $client->post('https://open-ai21.p.rapidapi.com/conversationgpt35', [
                 'headers' => [
                     'X-RapidAPI-Host' => 'open-ai21.p.rapidapi.com',
-                    'X-RapidAPI-Key' => '9ca90e22ddmshec8195c6d05690cp12fa7fjsne7d580803379', // Replace with your actual API key
+                    'X-RapidAPI-Key' => '7eb41137f1msh42853d0b06b477bp152ed1jsnbf84f988850e', // Replace with your actual API key
                     'content-type' => 'application/json',
                 ],
                 'json' => [

@@ -3,6 +3,7 @@
 @section('title', 'Default')
 
 @section('css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}"> --}}
     {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/prism.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
@@ -69,7 +70,7 @@
                         <button type="button" class="btn btn-info terms-and-conditions-button"
                             style="display: none;">Submit</button>
 
-                        <form action={{ route('store') }} method="POST">
+                        <form action={{ route('store') }} method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="form theme-form">
@@ -95,7 +96,7 @@
                                     <div class="col">
                                         <div class="mb-3">
                                             <label>Destination</label>
-                                            <input class="form-control" type="text" placeholder="John Doe"
+                                            <input class="form-control" type="text" placeholder=""
                                                 data-bs-original-title="" title="" name="destination">
                                         </div>
                                     </div>
@@ -108,7 +109,23 @@
                                                 name="estimated_amount">
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="date-picker col-md-4 mb-3">
+                                        <label class="form-label"> Start Date</label>
+                                        <div class="input-group">
+                                            <input class="datepicker-here form-control digits" type="text"
+                                                data-language="en" data-bs-original-title="" title=""
+                                                name="start_date" required />
+                                        </div>
+                                    </div>
+                                    <div class="date-picker col-md-4 mb-3">
+                                        <label class="form-label"> End Date</label>
+                                        <div class="input-group">
+                                            <input class="datepicker-here form-control digits" type="text"
+                                                data-language="en" data-bs-original-title="" title="" name="end_date"
+                                                required />
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-sm-4">
                                         <div class="mb-3">
                                             <label>Starting date</label>
                                             <input class="form-control" type="date" name="start_date">
@@ -119,7 +136,7 @@
                                             <label>Ending date</label>
                                             <input class="form-control" type="date" name="end_date">
                                         </div>
-                                    </div>
+                                    </div> --}}
 
 
                                 </div>
@@ -135,15 +152,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <label for="attachment">Attachment:</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="attachment" name="attachment">
-                                        <label class="custom-file-label" for="attachment">Choose file</label>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label for="attachment">Attachment: (optional)</label>
+                                        <div class="">
+                                            <div class="custom-file">
+                                                <input type="file" class="form-control" id="attachment"
+                                                    name="attachment">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                {{-- <label for="attachment">Attachment:</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="form-control" id="attachment" name="attachment">
+                                        <label class="custom-file-label" for="attachment">Choose file</label>
+                                    </div>
+                                </div> --}}
 
-                                <button class="btn btn-info" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-primary float-end" type="button" data-bs-toggle="modal"
                                     data-bs-target="#exampleModalLong">Submit</button>
                             </div>
 
@@ -305,6 +333,9 @@
     });
 </script>
 @section('script')
+    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.en.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.custom.js') }}"></script>
     {{-- dashboard 2 --}}
     {{-- <script src="{{ asset('assets/js/chart/apex-chart/apex-chart.js') }}"></script>
     <script src="{{ asset('assets/js/chart/apex-chart/stock-prices.js') }}"></script>

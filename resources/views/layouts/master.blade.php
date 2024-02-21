@@ -5,8 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/images/favicon1.png') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon7.png') }}" type="image/x-icon">
     <title>Rkive Travels</title>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
@@ -19,41 +19,6 @@
     @yield('style')
 </head>
 <style>
-    .modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
     .apps {
         height: 200px;
         width: 200px;
@@ -65,79 +30,12 @@
         transition: all 0.2s ease-in-out;
     }
 
-    /* #expensesPieChart{
-        height: 200px !important;
-        width: 200px !important;
-        display: flex !important;
-    } */
     .pop:hover {
         transform: scale(1.1);
         transition: transform 0.5s ease-in-out;
     }
-
-
-
-
-    /* .loading-bubble {
-        padding: 10px 15px;
-        margin-bottom: 5px;
-        border-radius: 10px;
-        background-color: #7367FF;
-        color: white;
-        text-align: center;
-        /* Center loading dots */
-    /* } */
-
-    .loading-dots {
-        display: flex;
-        justify-content: space-between;
-        animation: loading-dots 1.5s infinite ease-in-out;
-    }
-
-    .dot {
-        width: 10px;
-        height: 10px;
-        background-color: #fff;
-        border-radius: 50%;
-        opacity: 0.5;
-        animation: dot-fade 1.5s infinite ease-in-out;
-    }
-
-    @keyframes loading-dots {
-        0% {
-            transform: translateX(0);
-        }
-
-        50% {
-            transform: translateX(10px);
-        }
-
-        100% {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes dot-fade {
-        0% {
-            opacity: 0.5;
-        }
-
-        25% {
-            opacity: 1;
-        }
-
-        75% {
-            opacity: 0.5;
-        }
-
-        100% {
-            opacity: 0.5;
-        }
-    }
-
-    */
 </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 {{-- @dd(Route::current()->getName()); --}}
 

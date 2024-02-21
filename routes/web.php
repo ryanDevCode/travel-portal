@@ -8,7 +8,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TravelRequestController;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\PdfController;
-
+use App\Http\Controllers\PrintController;
+use App\Http\Controllers\AppsController;
 
 Route::get('/', function () {
     return redirect()->route('login'); // Redirect to login
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/expense-track/{request}', [ExpenseTrackController::class, 'expenseTrack'])->name('expense.track');
     Route::post('/expense-track', [ExpenseTrackController::class, 'store'])->name('expense.track.store');
-    Route::view('/expense-track', [ExpenseTrackController::class, 'index'])->name('expense.track.view');
+    // Route::view('/expense-track', [ExpenseTrackController::class, 'index'])->name('expense.track.view');
 
     //expense view
     Route::get('expenses', [ExpenseTrackController::class, 'ExpenseView'])->name('ExpenseView');
@@ -52,9 +53,9 @@ Route::middleware('auth')->group(function () {
 
 
     //PDF GENERATOR
-    Route::view('authorization-paper', 'pages.authorization_paper');
-    Route::get('/authorization-paper/{request}', [ExpenseTrackController::class, 'getLetter'])->name('getLetter');
-    Route::get('generate-pdf/{request}', [PdfController::class, 'generatePDF'])->name(('generate-pdf'));
+    // Route::view('authorization-paper', 'pages.authorization_paper');
+    // Route::get('/authorization-paper/{request}', [ExpenseTrackController::class, 'getLetter'])->name('getLetter');
+    // Route::get('generate-pdf/{request}', [PdfController::class, 'generatePDF'])->name(('generate-pdf'));
     Route::view('policy', 'pages.policy')->name('policy');
 
 
@@ -70,10 +71,15 @@ Route::middleware('auth')->group(function () {
     Route::post('chatbot/process', [ChatController::class, 'processMessage'])->name('aiTestKenme');
 
 
-//apps
+    //apps
+    Route::get('maps', [AppsController::class, 'showMaps'])->name('map');
     Route::view('ask-ai', 'apps.chatbot')->name('Ai');
     Route::view('find-restaurant', 'apps.find-restaurant')->name('Restaurant');
+    Route::get('currency-converter', [AppsController::class, 'convertCurrency'])->name('convert');
 
+
+    // pdf
+    Route::resource('travel-authorization/print/{request}', PrintController::class)->names('document');
 
 
 
