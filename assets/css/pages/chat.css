@@ -1,0 +1,137 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    /* Adjust height as needed */
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10em;
+    background-color: white;
+}
+
+.chat-history {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* Allow messages to fill available space */
+}
+
+.message-form-container {
+    display: flex;
+    width: 100%;
+    /* Set full width */
+    border-top: 1px solid #ccc;
+    padding: 5px 10px;
+}
+
+.message-form-container form {
+    display: flex;
+    width: 100%;
+    gap: 2em;
+}
+
+.chat-bubble {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    position: relative;
+    /* For tail positioning */
+}
+
+.user-bubble {
+    background-color: #82b9eb;
+    color: #333;
+    align-self: flex-end;
+    /* Align to right */
+}
+
+.user-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    right: -5px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+}
+
+.ai-bubble {
+    background-color: #7367ff;
+    color: white;
+    align-self: flex-start;
+    /* Align to left */
+}
+
+.ai-bubble::after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: -5px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: #7367ff;
+}
+.loading-bubble {
+    background-color: #7367ff;
+    color: white;
+    align-self: flex-start;
+    padding: 10px 15px;
+    margin-top:50px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    position: relative;
+    height: 30px;
+    width: 50%;
+}
+.chat-history li {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+}
+
+.user-message {
+    text-align: right;
+    background-color: #82b9eb;
+    width: 50%;
+}
+
+.ai-message {
+    text-align: left;
+    background-color: #7367ff;
+    color: white;
+    width: 50%;
+}
+
+.user-message li {
+    background-color: #82b9eb;
+    border-radius: 10px 10px 10px 0;
+}
+
+.ai-message li {
+    background-color: #7367ff;
+    color: white;
+    border-radius: 10px 10px 0 10px;
+}
+
+#chat-input {
+    width: 100%;
+}
+
+.skeleton {
+    opacity: 0.7;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 70%);
+    }
+
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
+}

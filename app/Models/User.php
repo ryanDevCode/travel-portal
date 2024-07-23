@@ -17,6 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'g59_users';
     protected $fillable = [
         'name',
         'email',
@@ -41,4 +42,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+<<<<<<< Updated upstream
+=======
+
+    public function travelRequests()
+    {
+        return $this->hasMany(TravelRequest::class, 'user_id');
+
+    }
+
+    public function expenseTracks()
+    {
+        return $this->hasMany(ExpenseTrack::class, 'user_id');
+    }
+
+    //new
+    public function travel()
+    {
+        return $this->hasMany(Travel::class, 'UserID');
+    }
+
+    public function travelExpense()
+    {
+        return $this->hasMany(TravelExpense::class, 'UserID');
+    }
+
+>>>>>>> Stashed changes
 }

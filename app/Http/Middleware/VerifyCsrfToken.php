@@ -13,5 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        // 'livewire/*',
+        // 'ask-ai',
+        // 'travel-portal/ask-ai'
     ];
 }

@@ -2,8 +2,12 @@
 
 namespace {{ namespace }};
 
+<<<<<<< Updated upstream:vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/controller.stub
 use {{ rootNamespace }}Http\Controllers\Controller;
+=======
+>>>>>>> Stashed changes:app/Http/Controllers/PrintController.php
 use Illuminate\Http\Request;
+use App\Models\Travel;
 
 class {{ class }} extends Controller
 {
@@ -13,6 +17,12 @@ class {{ class }} extends Controller
     public function index()
     {
         //
+<<<<<<< Updated upstream:vendor/laravel/framework/src/Illuminate/Routing/Console/stubs/controller.stub
+=======
+        $form = Travel::where('RequestID', $request)->get();
+
+        return view('pdf.print', compact('form'));
+>>>>>>> Stashed changes:app/Http/Controllers/PrintController.php
     }
 
     /**
